@@ -6,12 +6,21 @@ document.querySelector('.add-button').addEventListener('click', () => {
     const newNumber = beverages.length + 1;
     clone.querySelector('.beverage-count').textContent = `Напиток №${newNumber}`;
     clone.querySelector('select').selectedIndex = 1;
+
     const newRadioName = 'milk-' + Date.now();
     const radios = clone.querySelectorAll('input[type="radio"]');
     radios.forEach((radio, i) => {
         radio.name = newRadioName;
         radio.checked = i === 0;
     });
+
+    const newCheckBoxName = 'options-' + Date.now();
+    const checkboxes = clone.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach((checkbox, i) => {
+        checkbox.name = newCheckBoxName;
+        checkbox.checked = 0;
+    });
+
     clone.querySelectorAll('input[type="checkbox"]').forEach(chk => chk.checked = false);
     form.insertBefore(clone, document.querySelector('.add-button').parentElement);
 });
