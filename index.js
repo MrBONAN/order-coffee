@@ -56,10 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalOverlay = document.querySelector('.modal-overlay');
     const modal = document.querySelector('.modal');
     const closeButton = document.querySelector('.modal-close');
-
     function showModal() {
         modalOverlay.style.display = 'block';
         modal.style.display = 'block';
+        const beverages = document.querySelectorAll('.beverage').length;
+        modal.querySelector('p').textContent = `Заказ принят! Вы заказали ${beverages} напитков`;
     }
 
     function hideModal() {
