@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         table.setAttribute('align', 'center');
         const thead = document.createElement('thead');
         const headerRow = document.createElement('tr');
-        const headers = ['Напиток', 'Молоко', 'Дополнительно'];
+        const headers = ['Напиток', 'Молоко', 'Дополнительно', 'Пожелания'];
         headers.forEach(headerText => {
             const th = document.createElement('th');
             th.textContent = headerText;
@@ -85,6 +85,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const additionalCell = document.createElement('td');
             additionalCell.textContent = order.additional.join(', ') || '—';
             row.appendChild(additionalCell);
+            const wishesCell = document.createElement('td');
+            wishesCell.textContent = order.wishes;
+            row.appendChild(wishesCell);
             tbody.appendChild(row);
         });
         table.appendChild(tbody);
@@ -124,7 +127,7 @@ function getAllOrders() {
             return acc;
         }, []);
 
-        orders.push({"select": select.value, "milk": milk[0].value, "additional": additionalInfo});
+        orders.push({"select": select.value, "milk": milk[0].value, "additional": additionalInfo, "wishes" :  document.querySelector('textarea').value});
     }
 
     return orders;
