@@ -140,3 +140,14 @@ function getCorrectBeverageForm(count) {
     const title = titles[cases[(count % 10 < 5) ? count % 10 : 5]];
     return `${count} ${title}`;
 }
+
+const textarea = document.querySelector('textarea');
+textarea.addEventListener('input', () => {
+    let text = textarea.value.toLowerCase();
+    const keyWords = ["срочно", "быстрее", "побыстрее", "скорее", "поскорее", "очень нужно"];
+    for (const key of keyWords) {
+        text = text.replaceAll(key, `<b>${key}</b>`);
+    }
+    console.log(text);
+    document.querySelector('#boldWishes').innerHTML = text;
+});
