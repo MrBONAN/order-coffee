@@ -47,6 +47,9 @@ document.querySelector('.add-button').addEventListener('click', () => {
         checkbox.checked = 0;
     });
 
+    clone.querySelector('textarea').value = '';
+    clone.querySelector('#boldWishes').innerHTML = '';
+
     clone.querySelectorAll('input[type="checkbox"]').forEach(chk => chk.checked = false);
     form.insertBefore(clone, document.querySelector('.add-button').parentElement);
 });
