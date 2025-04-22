@@ -58,7 +58,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeButton = document.querySelector('.modal-close');
 
     function showModal() {
-        getAllOrders();
+        const orders = getAllOrders();
+        const table = document.createElement('table');
+        table.setAttribute('border', '1px solid black');
+        table.setAttribute('align', 'center');
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        const headers = ['Напиток', 'Молоко', 'Дополнительно'];
+        headers.forEach(headerText => {
+            const th = document.createElement('th');
+            th.textContent = headerText;
+            headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
+        orders.forEach(order => {
+            const row = document.createElement('tr');
+            const drinkCell = document.createElement('td');
+            drinkCell.textContent = order.select;
+            row.appendChild(drinkCell);
+            const milkCell = document.createElement('td');
+            milkCell.textContent = order.milk;
+            row.appendChild(milkCell);
+            const additionalCell = document.createElement('td');
+            additionalCell.textContent = order.additional.join(', ') || '—';
+            row.appendChild(additionalCell);
+            tbody.appendChild(row);
+        });
+        table.appendChild(tbody);
+
+        const tableContainer = modal.querySelector('#order-table-container');
+        tableContainer.innerHTML = '';
+        tableContainer.appendChild(table);
         modalOverlay.style.display = 'block';
         modal.style.display = 'block';
         const beverages = document.querySelectorAll('.beverage').length;
@@ -83,7 +116,7 @@ function getAllOrders() {
     const beverages = document.querySelectorAll('.beverage');
     const orders = [];
     for (const beverage of beverages) {
-
+        const select = beverage.querySelector('select');
         const milk = beverage.querySelectorAll('input[type="radio"]:checked');
         const additional = beverage.querySelectorAll('input[type="checkbox"]:checked');
         const additionalInfo = Array.from(additional).reduce((acc, checkbox) => {
@@ -91,9 +124,10 @@ function getAllOrders() {
             return acc;
         }, []);
 
-        orders.push({"milk": milk[0].value, "additional": additionalInfo});
+        orders.push({"select": select.value, "milk": milk[0].value, "additional": additionalInfo});
     }
-    console.log(orders);
+
+    return orders;
 }
 
 function getCorrectBeverageForm(count) {
