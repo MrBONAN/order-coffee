@@ -58,10 +58,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeButton = document.querySelector('.modal-close');
 
     function showModal() {
+        getAllOrders();
         modalOverlay.style.display = 'block';
         modal.style.display = 'block';
         const beverages = document.querySelectorAll('.beverage').length;
-        modal.querySelector('p').textContent = `Заказ принят! Вы заказали ${getCorrectDrinkForm(beverages)}`;
+        modal.querySelector('p').textContent = `Заказ принят! Вы заказали ${getCorrectBeverageForm(beverages)}`;
     }
 
     function hideModal() {
@@ -78,7 +79,24 @@ document.addEventListener('DOMContentLoaded', () => {
     modalOverlay.addEventListener('click', hideModal);
 });
 
-function getCorrectDrinkForm(count) {
+function getAllOrders() {
+    const beverages = document.querySelectorAll('.beverage');
+    const orders = [];
+    for (const beverage of beverages) {
+
+        const milk = beverage.querySelectorAll('input[type="radio"]:checked');
+        const additional = beverage.querySelectorAll('input[type="checkbox"]:checked');
+        const additionalInfo = Array.from(additional).reduce((acc, checkbox) => {
+            acc.push(checkbox.value);
+            return acc;
+        }, []);
+
+        orders.push({"milk": milk[0].value, "additional": additionalInfo});
+    }
+    console.log(orders);
+}
+
+function getCorrectBeverageForm(count) {
     const cases = [2, 0, 1, 1, 1, 2];
     const titles = ['напиток', 'напитка', 'напитков'];
     if (count % 100 > 4 && count % 100 < 20) {
