@@ -56,11 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalOverlay = document.querySelector('.modal-overlay');
     const modal = document.querySelector('.modal');
     const closeButton = document.querySelector('.modal-close');
+
     function showModal() {
         modalOverlay.style.display = 'block';
         modal.style.display = 'block';
         const beverages = document.querySelectorAll('.beverage').length;
-        modal.querySelector('p').textContent = `Заказ принят! Вы заказали ${beverages} напитков`;
+        modal.querySelector('p').textContent = `Заказ принят! Вы заказали ${getCorrectDrinkForm(beverages)}`;
     }
 
     function hideModal() {
@@ -76,3 +77,14 @@ document.addEventListener('DOMContentLoaded', () => {
     closeButton.addEventListener('click', hideModal);
     modalOverlay.addEventListener('click', hideModal);
 });
+
+function getCorrectDrinkForm(count) {
+    const cases = [2, 0, 1, 1, 1, 2];
+    const titles = ['напиток', 'напитка', 'напитков'];
+    if (count % 100 > 4 && count % 100 < 20) {
+        const title = titles[2];
+        return `${count} ${title}`;
+    }
+    const title = titles[cases[(count % 10 < 5) ? count % 10 : 5]];
+    return `${count} ${title}`;
+}
