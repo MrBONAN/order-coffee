@@ -42,7 +42,7 @@ document.querySelector('.add-button').addEventListener('click', () => {
 
     const newCheckBoxName = 'options-' + Date.now();
     const checkboxes = clone.querySelectorAll('input[type="checkbox"]');
-    checkboxes.forEach((checkbox, i) => {
+    checkboxes.forEach((checkbox) => {
         checkbox.name = newCheckBoxName;
         checkbox.checked = 0;
     });
@@ -51,3 +51,27 @@ document.querySelector('.add-button').addEventListener('click', () => {
     form.insertBefore(clone, document.querySelector('.add-button').parentElement);
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const submitButton = document.querySelector('.submit-button');
+    const modalOverlay = document.querySelector('.modal-overlay');
+    const modal = document.querySelector('.modal');
+    const closeButton = document.querySelector('.modal-close');
+
+    function showModal() {
+        modalOverlay.style.display = 'block';
+        modal.style.display = 'block';
+    }
+
+    function hideModal() {
+        modalOverlay.style.display = 'none';
+        modal.style.display = 'none';
+    }
+
+    submitButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        showModal();
+    });
+
+    closeButton.addEventListener('click', hideModal);
+    modalOverlay.addEventListener('click', hideModal);
+});
